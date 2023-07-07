@@ -1,0 +1,14 @@
+C:\Users\MI05332\source\repos\CargaDiasFeriados\CargaDiasFeriados\bin\Debug\CargaDiasFeriados.exe.config
+C:\Users\MI05332\source\repos\CargaDiasFeriados\CargaDiasFeriados\bin\Debug\CargaDiasFeriados.exe
+C:\Users\MI05332\source\repos\CargaDiasFeriados\CargaDiasFeriados\bin\Debug\CargaDiasFeriados.pdb
+C:\Users\MI05332\source\repos\CargaDiasFeriados\CargaDiasFeriados\obj\Debug\CargaDiasFeriados.Form1.resources
+C:\Users\MI05332\source\repos\CargaDiasFeriados\CargaDiasFeriados\obj\Debug\CargaDiasFeriados.Properties.Resources.resources
+C:\Users\MI05332\source\repos\CargaDiasFeriados\CargaDiasFeriados\obj\Debug\CargaDiasFeriados.csproj.GenerateResource.cache
+C:\Users\MI05332\source\repos\CargaDiasFeriados\CargaDiasFeriados\obj\Debug\CargaDiasFeriados.csproj.CoreCompileInputs.cache
+C:\Users\MI05332\source\repos\CargaDiasFeriados\CargaDiasFeriados\obj\Debug\CargaDiasFeriados.exe
+C:\Users\MI05332\source\repos\CargaDiasFeriados\CargaDiasFeriados\obj\Debug\CargaDiasFeriados.pdb
+C:\Users\MI05332\source\repos\CargaDiasFeriados\CargaDiasFeriados\bin\Debug\EntityFramework.dll
+C:\Users\MI05332\source\repos\CargaDiasFeriados\CargaDiasFeriados\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\MI05332\source\repos\CargaDiasFeriados\CargaDiasFeriados\bin\Debug\EntityFramework.xml
+C:\Users\MI05332\source\repos\CargaDiasFeriados\CargaDiasFeriados\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\MI05332\source\repos\CargaDiasFeriados\CargaDiasFeriados\obj\Debug\CargaDiasFeriados.csproj.CopyComplete
