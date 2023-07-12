@@ -39,7 +39,7 @@ namespace CargaDiasFeriados
             this.cmbMes = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dtpMesFestivo = new System.Windows.Forms.MonthCalendar();
-            this.brnCancelar = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.dtGrdVwFeriados = new System.Windows.Forms.DataGridView();
@@ -53,7 +53,7 @@ namespace CargaDiasFeriados
             this.groupBox1.Controls.Add(this.rbAmbos);
             this.groupBox1.Controls.Add(this.rbEUA);
             this.groupBox1.Controls.Add(this.rbMexico);
-            this.groupBox1.Location = new System.Drawing.Point(16, 12);
+            this.groupBox1.Location = new System.Drawing.Point(16, 134);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(993, 82);
             this.groupBox1.TabIndex = 0;
@@ -99,7 +99,7 @@ namespace CargaDiasFeriados
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.cmbMes);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(16, 112);
+            this.groupBox2.Location = new System.Drawing.Point(16, 25);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(993, 85);
             this.groupBox2.TabIndex = 1;
@@ -146,18 +146,19 @@ namespace CargaDiasFeriados
             // 
             // dtpMesFestivo
             // 
-            this.dtpMesFestivo.Location = new System.Drawing.Point(16, 228);
+            this.dtpMesFestivo.Location = new System.Drawing.Point(108, 228);
             this.dtpMesFestivo.Name = "dtpMesFestivo";
             this.dtpMesFestivo.TabIndex = 2;
             // 
-            // brnCancelar
+            // btnCancelar
             // 
-            this.brnCancelar.Location = new System.Drawing.Point(714, 510);
-            this.brnCancelar.Name = "brnCancelar";
-            this.brnCancelar.Size = new System.Drawing.Size(140, 44);
-            this.brnCancelar.TabIndex = 3;
-            this.brnCancelar.Text = "Cancelar";
-            this.brnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Location = new System.Drawing.Point(714, 510);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(140, 44);
+            this.btnCancelar.TabIndex = 3;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // btnSalir
             // 
@@ -182,12 +183,14 @@ namespace CargaDiasFeriados
             // dtGrdVwFeriados
             // 
             this.dtGrdVwFeriados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtGrdVwFeriados.Location = new System.Drawing.Point(402, 228);
+            this.dtGrdVwFeriados.Location = new System.Drawing.Point(521, 228);
             this.dtGrdVwFeriados.Name = "dtGrdVwFeriados";
+            this.dtGrdVwFeriados.ReadOnly = true;
             this.dtGrdVwFeriados.RowHeadersWidth = 62;
             this.dtGrdVwFeriados.RowTemplate.Height = 28;
-            this.dtGrdVwFeriados.Size = new System.Drawing.Size(607, 253);
+            this.dtGrdVwFeriados.Size = new System.Drawing.Size(414, 253);
             this.dtGrdVwFeriados.TabIndex = 4;
+            this.dtGrdVwFeriados.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtGrdVwFeriados_CellDoubleClick);
             // 
             // Form1
             // 
@@ -197,12 +200,13 @@ namespace CargaDiasFeriados
             this.Controls.Add(this.dtGrdVwFeriados);
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.btnSalir);
-            this.Controls.Add(this.brnCancelar);
-            this.Controls.Add(this.dtpMesFestivo);
             this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.btnCancelar);
+            this.Controls.Add(this.dtpMesFestivo);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Carga Dias Feriados";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -225,7 +229,7 @@ namespace CargaDiasFeriados
         private System.Windows.Forms.ComboBox cmbMes;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MonthCalendar dtpMesFestivo;
-        private System.Windows.Forms.Button brnCancelar;
+        private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnSalir;
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.DataGridView dtGrdVwFeriados;

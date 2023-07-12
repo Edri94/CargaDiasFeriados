@@ -19,6 +19,9 @@ namespace CargaDiasFeriados
         List<Fecha> años;
         List<DIAS_FERIADOS> dias_feriados;
 
+        DateTime fecha_selected;
+        byte pais_seleted;
+
         public Form1()
         {
             InitializeComponent();
@@ -34,11 +37,23 @@ namespace CargaDiasFeriados
 
                 LlenarMeses();
                 LlenarAños();
+
+                SeleccionarFecha(DateTime.Now);
+                cmbAño.SelectedValue = DateTime.Now.Year;
+                cmbMes.SelectedValue = DateTime.Now.Month;
+                SeleccionarCalendario();
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error en Load", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }          
+        }
+
+        private void SeleccionarFecha(DateTime fecha)
+        {
+            dtpMesFestivo.SelectionStart = fecha;
+            dtpMesFestivo.SelectionEnd = fecha;
         }
 
         private void LlenarAños()
@@ -96,7 +111,8 @@ namespace CargaDiasFeriados
                     int año = ((Fecha)cmbAño.SelectedItem).Numero;
                     int mes = ((Fecha)cmbMes.SelectedItem).Numero;
 
-                    dtpMesFestivo.SelectionStart = new DateTime(año, mes, 1);
+
+                    SeleccionarFecha(new DateTime(año, mes, 1));
 
                     dias_feriados = ConsultaFeriadosPorMes(new DateTime(año, mes, 1));
 
@@ -192,40 +208,69 @@ namespace CargaDiasFeriados
         {
             try
             {
-                DIAS_FERIADOS dia = new DIAS_FERIADOS();
-
-                if(rbMexico.Checked)
+                if(btnGuardar.Text == "Guardar")
                 {
-                    dia.tipo_dia_feriado = 1;
-                }
-                else if(rbEUA.Checked)
-                {
-                    dia.tipo_dia_feriado = 2;
-                }
-                else if(rbAmbos.Checked)
-                {
-                    dia.tipo_dia_feriado = 3;
-                }
+                    DIAS_FERIADOS dia = new DIAS_FERIADOS();
 
-                dia.fecha = dtpMesFestivo.SelectionStart;
+                    dia.tipo_dia_feriado = ObtenerPais();                
+                    dia.fecha = dtpMesFestivo.SelectionStart;
 
-
-                using (CATALOGOSEntities context = new CATALOGOSEntities())
-                {
-                    SqlConnection cnn = (SqlConnection) context.Database.Connection;
-
-                    cnn.Open();
-                    SqlCommand cmd = cnn.CreateCommand();
-                    cmd.CommandText = "INSERT INTO DIAS_FERIADOS(fecha, tipo_dia_feriado) VALUES(@param1, @param2)";
-                    cmd.Parameters.AddWithValue("@param1", dia.fecha);
-                    cmd.Parameters.AddWithValue("@param2", dia.tipo_dia_feriado);
-                    int afectados = cmd.ExecuteNonQuery();
-
-                    if(afectados > 0)
+                    if (ConsultarFecha(dia))
                     {
-                        SeleccionarCalendario();
+                        MessageBox.Show("Esta fecha ya esta dada de alta", "Fecha Duplicada", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+                    else
+                    {
+
+                        using (CATALOGOSEntities context = new CATALOGOSEntities())
+                        {
+                            SqlConnection cnn = (SqlConnection)context.Database.Connection;
+
+                            cnn.Open();
+                            SqlCommand cmd = cnn.CreateCommand();
+                            cmd.CommandText = "INSERT INTO DIAS_FERIADOS(fecha, tipo_dia_feriado) VALUES(@param1, @param2)";
+                            cmd.Parameters.AddWithValue("@param1", dia.fecha);
+                            cmd.Parameters.AddWithValue("@param2", dia.tipo_dia_feriado);
+                            int afectados = cmd.ExecuteNonQuery();
+
+                            if (afectados > 0)
+                            {
+                                SeleccionarCalendario();
+                            }
+                        }
                     }
                 }
+                else if(btnGuardar.Text == "Editar")
+                {
+                    using (CATALOGOSEntities context = new CATALOGOSEntities())
+                    {
+
+                        DIAS_FERIADOS dia = context.DIAS_FERIADOS.Where(w => w.fecha == fecha_selected && w.tipo_dia_feriado == pais_seleted).FirstOrDefault();
+
+                        dia.tipo_dia_feriado = ObtenerPais();
+
+                      
+
+                        SqlConnection cnn = (SqlConnection)context.Database.Connection;
+
+                        cnn.Open();
+                        SqlCommand cmd = cnn.CreateCommand();
+                        cmd.CommandText = "UPDATE DIAS_FERIADOS SET tipo_dia_feriado=@param1 WHERE fecha=@param2";
+                        cmd.Parameters.AddWithValue("@param1", dia.tipo_dia_feriado);
+                        cmd.Parameters.AddWithValue("@param2", dia.fecha);
+
+                        int afectados = cmd.ExecuteNonQuery();
+
+                        if (afectados > 0)
+                        {
+                            SeleccionarCalendario();
+                        }
+                    }
+                }
+                btnCancelar.Text = "Cancelar";
+                btnGuardar.Text = "Guardar";
+
+
             }
             catch (Exception ex)
             {
@@ -234,6 +279,122 @@ namespace CargaDiasFeriados
             
         }
 
-        
+        private byte ObtenerPais()
+        {
+            byte respuesta = 0;
+
+            if (rbMexico.Checked)
+            {
+                respuesta = 1;
+            }
+            else if (rbEUA.Checked)
+            {
+                respuesta = 2;
+            }
+            else if (rbAmbos.Checked)
+            {
+                respuesta = 3;
+            }
+
+            return respuesta;
+        }
+
+        private void dtGrdVwFeriados_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                fecha_selected = DateTime.Parse(dtGrdVwFeriados.Rows[e.RowIndex].Cells[0].Value.ToString());
+
+                btnCancelar.Text = "Eliminar";
+                btnGuardar.Text = "Editar";
+
+                SeleccionarFecha(fecha_selected);
+
+                string pais = dtGrdVwFeriados.Rows[e.RowIndex].Cells[1].Value.ToString();
+                pais_seleted = 0;
+
+                switch (pais)
+                {
+                    case "Mexico":
+                        pais_seleted = 1;
+                        rbMexico.Checked = true;
+                        break;
+                    case "Estados Unidos":
+                        pais_seleted = 2;
+                        rbEUA.Checked = true;
+                        break;
+                    case "Ambos":
+                        pais_seleted = 3;
+                        rbAmbos.Checked = true;
+                        break;
+                }
+
+               
+                bool existe = ConsultarFecha(new DIAS_FERIADOS { tipo_dia_feriado = pais_seleted, fecha = fecha_selected });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error al Seleccionar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
+        }
+
+        private bool ConsultarFecha(DIAS_FERIADOS dia)
+        {
+            using(CATALOGOSEntities context = new CATALOGOSEntities())
+            {
+                 DIAS_FERIADOS resultado = context.DIAS_FERIADOS.Where(w => w.fecha == dia.fecha).FirstOrDefault();
+
+                if(resultado == null)
+                {
+                    return false;
+                } 
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            if(btnCancelar.Text == "Cancelar")
+            {
+
+            }
+            else if(btnCancelar.Text == "Eliminar")
+            {
+                DialogResult dialogResult = MessageBox.Show("Esta seguro de borrar el dia feriado?", "Borrando Dia Feriado", MessageBoxButtons.YesNo);
+
+                if(dialogResult == DialogResult.Yes)
+                {
+                    using (CATALOGOSEntities context = new CATALOGOSEntities())
+                    {
+
+                        DIAS_FERIADOS dia = context.DIAS_FERIADOS.Where(w => w.fecha == fecha_selected && w.tipo_dia_feriado == pais_seleted).FirstOrDefault();
+
+                        SqlConnection cnn = (SqlConnection)context.Database.Connection;
+
+                        cnn.Open();
+                        SqlCommand cmd = cnn.CreateCommand();
+                        cmd.CommandText = "DELETE FROM DIAS_FERIADOS WHERE fecha=@param1 AND tipo_dia_feriado=@param2";
+                        cmd.Parameters.AddWithValue("@param1", dia.fecha);
+                        cmd.Parameters.AddWithValue("@param2", dia.tipo_dia_feriado);
+                        int afectados = cmd.ExecuteNonQuery();
+
+                        if (afectados > 0)
+                        {
+                            SeleccionarCalendario();
+                        }
+                    }
+                }
+                else if(dialogResult == DialogResult.No)
+                {
+                    return;
+                }                
+            }
+            btnCancelar.Text = "Cancelar";
+            btnGuardar.Text = "Guardar";
+        }
     } 
 }
