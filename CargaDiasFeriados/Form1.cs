@@ -21,6 +21,7 @@ namespace CargaDiasFeriados
 
         DateTime fecha_selected;
         byte pais_seleted;
+        bool click_cmbAño = false;
 
         public Form1()
         {
@@ -99,7 +100,101 @@ namespace CargaDiasFeriados
 
         private void cmbAño_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SeleccionarCalendario();
+            try
+            {
+                CargarDiasAño();
+                SeleccionarCalendario();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error en Combo Box", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
+        }
+
+        private void CargarDiasAño()
+        {
+            if (click_cmbAño)
+            {
+                if (cmbAño.SelectedValue != null)
+                {
+                    DateTime fecha_inicio = new DateTime((int)cmbAño.SelectedValue, 1, 1);
+                    DateTime fecha_fin = new DateTime((int)cmbAño.SelectedValue, 12, 31);
+
+                    using (CATALOGOSEntities context = new CATALOGOSEntities())
+                    {
+                        List<DIAS_FERIADOS> lista_dias = context.DIAS_FERIADOS.Where(w => w.fecha >= fecha_inicio && w.fecha <= fecha_fin).ToList();
+
+                        if(lista_dias.Count() == 0)
+                        {
+                            DialogResult dialogResult = MessageBox.Show("No hay dias cargados para este año, ¿Desea cargar todos los fines de semana de este año?", "Sin Dias Feriados", MessageBoxButtons.YesNo);
+                            if(dialogResult == DialogResult.Yes)
+                            {
+                                CargarFinesAño(fecha_inicio.Year);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void CargarFinesAño(int year)
+        {
+            SqlConnection cnn;
+            SqlTransaction transaction;
+            SqlCommand cmd;
+
+            using (CATALOGOSEntities context = new CATALOGOSEntities())
+            {
+                cnn = (SqlConnection)context.Database.Connection;
+                cnn.Open();
+                cmd = cnn.CreateCommand();
+                transaction = cnn.BeginTransaction();
+
+                cmd.Connection = cnn;
+                cmd.Transaction = transaction;
+
+                try
+                {
+                    List<DIAS_FERIADOS> dias_cargar = new List<DIAS_FERIADOS>();
+
+                    DateTime fecha_contador = new DateTime(year, 1, 1);
+
+                    int afectados = 0;
+                    do
+                    {
+                        fecha_contador = fecha_contador.AddDays(1);
+                        string nombre_dia = fecha_contador.ToString("dddd");
+
+                        if (nombre_dia == "sábado" || nombre_dia == "domingo")
+                        {
+                            //dias_cargar.Add(new DIAS_FERIADOS { fecha = fecha_contador, tipo_dia_feriado = 3 });
+                            cmd.Parameters.Clear();
+
+                            cmd.CommandText = "INSERT INTO DIAS_FERIADOS(fecha, tipo_dia_feriado) VALUES(@param1, @param2)";
+                            cmd.Parameters.AddWithValue("@param1", fecha_contador);
+                            cmd.Parameters.AddWithValue("@param2", 3);
+
+                            afectados += cmd.ExecuteNonQuery();
+                        }
+                    } while (fecha_contador.Year == year);
+
+                    transaction.Commit();
+
+                    MessageBox.Show($"Se cargaron {afectados} dias", "Carga Fines de semana", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (SqlException ex)
+                {
+                    transaction.Rollback();
+                    MessageBox.Show(ex.Message, "Error al Cargar Fines de Semana", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
+                }
+                finally
+                {
+                    cnn.Close();
+                }
+            }
+           
         }
 
         private void SeleccionarCalendario()
@@ -206,6 +301,7 @@ namespace CargaDiasFeriados
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            SqlConnection cnn;
             try
             {
                 if(btnGuardar.Text == "Guardar")
@@ -224,7 +320,7 @@ namespace CargaDiasFeriados
 
                         using (CATALOGOSEntities context = new CATALOGOSEntities())
                         {
-                            SqlConnection cnn = (SqlConnection)context.Database.Connection;
+                           cnn = (SqlConnection)context.Database.Connection;
 
                             cnn.Open();
                             SqlCommand cmd = cnn.CreateCommand();
@@ -232,11 +328,12 @@ namespace CargaDiasFeriados
                             cmd.Parameters.AddWithValue("@param1", dia.fecha);
                             cmd.Parameters.AddWithValue("@param2", dia.tipo_dia_feriado);
                             int afectados = cmd.ExecuteNonQuery();
-
+                            cnn.Close();
                             if (afectados > 0)
                             {
                                 SeleccionarCalendario();
                             }
+
                         }
                     }
                 }
@@ -249,17 +346,15 @@ namespace CargaDiasFeriados
 
                         dia.tipo_dia_feriado = ObtenerPais();
 
-                      
-
-                        SqlConnection cnn = (SqlConnection)context.Database.Connection;
+                        cnn = (SqlConnection)context.Database.Connection;
 
                         cnn.Open();
                         SqlCommand cmd = cnn.CreateCommand();
                         cmd.CommandText = "UPDATE DIAS_FERIADOS SET tipo_dia_feriado=@param1 WHERE fecha=@param2";
                         cmd.Parameters.AddWithValue("@param1", dia.tipo_dia_feriado);
                         cmd.Parameters.AddWithValue("@param2", dia.fecha);
-
                         int afectados = cmd.ExecuteNonQuery();
+                        cnn.Close();
 
                         if (afectados > 0)
                         {
@@ -395,6 +490,11 @@ namespace CargaDiasFeriados
             }
             btnCancelar.Text = "Cancelar";
             btnGuardar.Text = "Guardar";
+        }
+
+        private void cmbAño_Click(object sender, EventArgs e)
+        {
+            click_cmbAño = true;
         }
     } 
 }

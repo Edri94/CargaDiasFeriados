@@ -55,7 +55,7 @@ namespace CargaDiasFeriados
             this.groupBox1.Controls.Add(this.rbMexico);
             this.groupBox1.Location = new System.Drawing.Point(16, 134);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(993, 82);
+            this.groupBox1.Size = new System.Drawing.Size(775, 82);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Seleccione el pais";
@@ -101,7 +101,7 @@ namespace CargaDiasFeriados
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Location = new System.Drawing.Point(16, 25);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(993, 85);
+            this.groupBox2.Size = new System.Drawing.Size(775, 85);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Selecciones el Mes y Año a visualizar";
@@ -115,6 +115,7 @@ namespace CargaDiasFeriados
             this.cmbAño.Size = new System.Drawing.Size(224, 28);
             this.cmbAño.TabIndex = 1;
             this.cmbAño.SelectedIndexChanged += new System.EventHandler(this.cmbAño_SelectedIndexChanged);
+            this.cmbAño.Click += new System.EventHandler(this.cmbAño_Click);
             // 
             // label2
             // 
@@ -146,13 +147,13 @@ namespace CargaDiasFeriados
             // 
             // dtpMesFestivo
             // 
-            this.dtpMesFestivo.Location = new System.Drawing.Point(108, 228);
+            this.dtpMesFestivo.Location = new System.Drawing.Point(18, 228);
             this.dtpMesFestivo.Name = "dtpMesFestivo";
             this.dtpMesFestivo.TabIndex = 2;
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(714, 510);
+            this.btnCancelar.Location = new System.Drawing.Point(496, 510);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(140, 44);
             this.btnCancelar.TabIndex = 3;
@@ -162,7 +163,7 @@ namespace CargaDiasFeriados
             // 
             // btnSalir
             // 
-            this.btnSalir.Location = new System.Drawing.Point(869, 510);
+            this.btnSalir.Location = new System.Drawing.Point(651, 510);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(140, 44);
             this.btnSalir.TabIndex = 3;
@@ -172,7 +173,7 @@ namespace CargaDiasFeriados
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(559, 510);
+            this.btnGuardar.Location = new System.Drawing.Point(341, 510);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(140, 44);
             this.btnGuardar.TabIndex = 3;
@@ -183,7 +184,7 @@ namespace CargaDiasFeriados
             // dtGrdVwFeriados
             // 
             this.dtGrdVwFeriados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtGrdVwFeriados.Location = new System.Drawing.Point(521, 228);
+            this.dtGrdVwFeriados.Location = new System.Drawing.Point(377, 228);
             this.dtGrdVwFeriados.Name = "dtGrdVwFeriados";
             this.dtGrdVwFeriados.ReadOnly = true;
             this.dtGrdVwFeriados.RowHeadersWidth = 62;
@@ -196,7 +197,7 @@ namespace CargaDiasFeriados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1026, 566);
+            this.ClientSize = new System.Drawing.Size(809, 566);
             this.Controls.Add(this.dtGrdVwFeriados);
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.btnSalir);
