@@ -21,7 +21,7 @@ namespace CargaDiasFeriados
 
         DateTime fecha_selected;
         byte pais_seleted;
-        bool click_cmbAño = false;
+        bool click_cmbAño = false, click_cmbMes = false;
 
         public Form1()
         {
@@ -95,7 +95,34 @@ namespace CargaDiasFeriados
 
         private void cmbMes_SelectedIndexChanged(object sender, EventArgs e)
         {
+            CargarDiasMes();
             SeleccionarCalendario();
+        }
+
+        private void CargarDiasMes()
+        {
+            if (click_cmbMes)
+            {
+                if (cmbMes.SelectedValue != null)
+                {
+                    DateTime fecha_inicio = new DateTime((int)cmbAño.SelectedValue, (int)cmbMes.SelectedValue, 1);
+                    DateTime fecha_fin = new DateTime((int)cmbAño.SelectedValue, (int)cmbMes.SelectedValue, 31);
+
+                    using (CATALOGOSEntities context = new CATALOGOSEntities())
+                    {
+                        List<DIAS_FERIADOS> lista_dias = context.DIAS_FERIADOS.Where(w => w.fecha >= fecha_inicio && w.fecha <= fecha_fin).ToList();
+
+                        if (lista_dias.Count() == 0)
+                        {
+                            DialogResult dialogResult = MessageBox.Show("No hay dias cargados para este Mes, ¿Desea cargar todos los fines de semana de este mes?", "Sin Dias Feriados", MessageBoxButtons.YesNo);
+                            if (dialogResult == DialogResult.Yes)
+                            {
+                                CargarFinesFecha(fecha_inicio.Year, fecha_inicio.Month);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void cmbAño_SelectedIndexChanged(object sender, EventArgs e)
@@ -130,7 +157,7 @@ namespace CargaDiasFeriados
                             DialogResult dialogResult = MessageBox.Show("No hay dias cargados para este año, ¿Desea cargar todos los fines de semana de este año?", "Sin Dias Feriados", MessageBoxButtons.YesNo);
                             if(dialogResult == DialogResult.Yes)
                             {
-                                CargarFinesAño(fecha_inicio.Year);
+                                CargarFinesFecha(fecha_inicio.Year);
                             }
                         }
                     }
@@ -138,7 +165,7 @@ namespace CargaDiasFeriados
             }
         }
 
-        private void CargarFinesAño(int year)
+        private void CargarFinesFecha(int year, int mes = 0)
         {
             SqlConnection cnn;
             SqlTransaction transaction;
@@ -158,26 +185,53 @@ namespace CargaDiasFeriados
                 {
                     List<DIAS_FERIADOS> dias_cargar = new List<DIAS_FERIADOS>();
 
-                    DateTime fecha_contador = new DateTime(year, 1, 1);
-
+                    DateTime fecha_contador;
                     int afectados = 0;
-                    do
+
+                    if (mes <= 0)
                     {
-                        fecha_contador = fecha_contador.AddDays(1);
-                        string nombre_dia = fecha_contador.ToString("dddd");
+                        fecha_contador = new DateTime(year, 1, 1);
 
-                        if (nombre_dia == "sábado" || nombre_dia == "domingo")
+                        do
                         {
-                            //dias_cargar.Add(new DIAS_FERIADOS { fecha = fecha_contador, tipo_dia_feriado = 3 });
-                            cmd.Parameters.Clear();
+                            fecha_contador = fecha_contador.AddDays(1);
+                            string nombre_dia = fecha_contador.ToString("dddd");
 
-                            cmd.CommandText = "INSERT INTO DIAS_FERIADOS(fecha, tipo_dia_feriado) VALUES(@param1, @param2)";
-                            cmd.Parameters.AddWithValue("@param1", fecha_contador);
-                            cmd.Parameters.AddWithValue("@param2", 3);
+                            if (nombre_dia == "sábado" || nombre_dia == "domingo")
+                            {
+                                //dias_cargar.Add(new DIAS_FERIADOS { fecha = fecha_contador, tipo_dia_feriado = 3 });
+                                cmd.Parameters.Clear();
 
-                            afectados += cmd.ExecuteNonQuery();
-                        }
-                    } while (fecha_contador.Year == year);
+                                cmd.CommandText = "INSERT INTO DIAS_FERIADOS(fecha, tipo_dia_feriado) VALUES(@param1, @param2)";
+                                cmd.Parameters.AddWithValue("@param1", fecha_contador);
+                                cmd.Parameters.AddWithValue("@param2", 3);
+
+                                afectados += cmd.ExecuteNonQuery();
+                            }
+                        } while (fecha_contador.Year == year);
+                    }
+                    else
+                    {
+                        fecha_contador = new DateTime(year, mes, 1);
+
+                        do
+                        {
+                            fecha_contador = fecha_contador.AddDays(1);
+                            string nombre_dia = fecha_contador.ToString("dddd");
+
+                            if (nombre_dia == "sábado" || nombre_dia == "domingo")
+                            {
+                                //dias_cargar.Add(new DIAS_FERIADOS { fecha = fecha_contador, tipo_dia_feriado = 3 });
+                                cmd.Parameters.Clear();
+
+                                cmd.CommandText = "INSERT INTO DIAS_FERIADOS(fecha, tipo_dia_feriado) VALUES(@param1, @param2)";
+                                cmd.Parameters.AddWithValue("@param1", fecha_contador);
+                                cmd.Parameters.AddWithValue("@param2", 3);
+
+                                afectados += cmd.ExecuteNonQuery();
+                            }
+                        } while (fecha_contador.Month == mes);
+                    }
 
                     transaction.Commit();
 
@@ -214,7 +268,7 @@ namespace CargaDiasFeriados
                     DataTable dt = LlenarListFeriados(dias_feriados);
                     dtGrdVwFeriados.DataSource = dt;
                     dtGrdVwFeriados.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                    dtGrdVwFeriados.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    dtGrdVwFeriados.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                     dtGrdVwFeriados.Refresh();
                 }
             }
@@ -337,7 +391,7 @@ namespace CargaDiasFeriados
                         }
                     }
                 }
-                else if(btnGuardar.Text == "Editar")
+                else if(btnGuardar.Text == "Actualizar")
                 {
                     using (CATALOGOSEntities context = new CATALOGOSEntities())
                     {
@@ -371,6 +425,10 @@ namespace CargaDiasFeriados
             {
                 MessageBox.Show(ex.Message, "Error al Guardar", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                btnGuardar.Enabled = false;
+            }
             
         }
 
@@ -398,10 +456,12 @@ namespace CargaDiasFeriados
         {
             try
             {
+                btnGuardar.Enabled = true;
+
                 fecha_selected = DateTime.Parse(dtGrdVwFeriados.Rows[e.RowIndex].Cells[0].Value.ToString());
 
                 btnCancelar.Text = "Eliminar";
-                btnGuardar.Text = "Editar";
+                btnGuardar.Text = "Actualizar";
 
                 SeleccionarFecha(fecha_selected);
 
@@ -490,11 +550,35 @@ namespace CargaDiasFeriados
             }
             btnCancelar.Text = "Cancelar";
             btnGuardar.Text = "Guardar";
+            btnGuardar.Enabled = false;
         }
 
         private void cmbAño_Click(object sender, EventArgs e)
         {
             click_cmbAño = true;
+        }
+
+        private void dtpMesFestivo_Enter(object sender, EventArgs e)
+        {
+            btnGuardar.Enabled = true;
+        }
+
+        private void cmbMes_Click(object sender, EventArgs e)
+        {
+            click_cmbMes = true;
+        }
+
+        private void dtpMesFestivo_Leave(object sender, EventArgs e)
+        {
+            if(btnGuardar.Focused)
+            {
+                btnGuardar.PerformClick();
+            }
+            else
+            {
+                btnGuardar.Enabled = false;
+            }
+            
         }
     } 
 }

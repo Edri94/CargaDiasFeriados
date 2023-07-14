@@ -40,12 +40,14 @@ namespace CargaDiasFeriados
             this.label1 = new System.Windows.Forms.Label();
             this.dtpMesFestivo = new System.Windows.Forms.MonthCalendar();
             this.btnCancelar = new System.Windows.Forms.Button();
-            this.btnSalir = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.dtGrdVwFeriados = new System.Windows.Forms.DataGridView();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnSalir = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtGrdVwFeriados)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -53,7 +55,8 @@ namespace CargaDiasFeriados
             this.groupBox1.Controls.Add(this.rbAmbos);
             this.groupBox1.Controls.Add(this.rbEUA);
             this.groupBox1.Controls.Add(this.rbMexico);
-            this.groupBox1.Location = new System.Drawing.Point(16, 134);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Location = new System.Drawing.Point(44, 141);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(775, 82);
             this.groupBox1.TabIndex = 0;
@@ -63,9 +66,10 @@ namespace CargaDiasFeriados
             // rbAmbos
             // 
             this.rbAmbos.AutoSize = true;
-            this.rbAmbos.Location = new System.Drawing.Point(596, 37);
+            this.rbAmbos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbAmbos.Location = new System.Drawing.Point(659, 37);
             this.rbAmbos.Name = "rbAmbos";
-            this.rbAmbos.Size = new System.Drawing.Size(84, 24);
+            this.rbAmbos.Size = new System.Drawing.Size(89, 24);
             this.rbAmbos.TabIndex = 0;
             this.rbAmbos.TabStop = true;
             this.rbAmbos.Text = "Ambos";
@@ -74,9 +78,10 @@ namespace CargaDiasFeriados
             // rbEUA
             // 
             this.rbEUA.AutoSize = true;
-            this.rbEUA.Location = new System.Drawing.Point(319, 37);
+            this.rbEUA.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbEUA.Location = new System.Drawing.Point(453, 37);
             this.rbEUA.Name = "rbEUA";
-            this.rbEUA.Size = new System.Drawing.Size(147, 24);
+            this.rbEUA.Size = new System.Drawing.Size(161, 24);
             this.rbEUA.TabIndex = 0;
             this.rbEUA.TabStop = true;
             this.rbEUA.Text = "Estados Unidos";
@@ -85,9 +90,10 @@ namespace CargaDiasFeriados
             // rbMexico
             // 
             this.rbMexico.AutoSize = true;
-            this.rbMexico.Location = new System.Drawing.Point(42, 37);
+            this.rbMexico.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbMexico.Location = new System.Drawing.Point(311, 37);
             this.rbMexico.Name = "rbMexico";
-            this.rbMexico.Size = new System.Drawing.Size(83, 24);
+            this.rbMexico.Size = new System.Drawing.Size(89, 24);
             this.rbMexico.TabIndex = 0;
             this.rbMexico.TabStop = true;
             this.rbMexico.Text = "Mexico";
@@ -99,7 +105,8 @@ namespace CargaDiasFeriados
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.cmbMes);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(16, 25);
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Location = new System.Drawing.Point(44, 50);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(775, 85);
             this.groupBox2.TabIndex = 1;
@@ -109,8 +116,9 @@ namespace CargaDiasFeriados
             // cmbAño
             // 
             this.cmbAño.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAño.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbAño.FormattingEnabled = true;
-            this.cmbAño.Location = new System.Drawing.Point(527, 36);
+            this.cmbAño.Location = new System.Drawing.Point(527, 37);
             this.cmbAño.Name = "cmbAño";
             this.cmbAño.Size = new System.Drawing.Size(224, 28);
             this.cmbAño.TabIndex = 1;
@@ -120,40 +128,45 @@ namespace CargaDiasFeriados
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(459, 40);
+            this.label2.Location = new System.Drawing.Point(459, 41);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(42, 20);
+            this.label2.Size = new System.Drawing.Size(46, 20);
             this.label2.TabIndex = 0;
             this.label2.Text = "Año:";
             // 
             // cmbMes
             // 
             this.cmbMes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbMes.FormattingEnabled = true;
-            this.cmbMes.Location = new System.Drawing.Point(92, 36);
+            this.cmbMes.Location = new System.Drawing.Point(220, 37);
             this.cmbMes.Name = "cmbMes";
             this.cmbMes.Size = new System.Drawing.Size(224, 28);
             this.cmbMes.TabIndex = 1;
             this.cmbMes.SelectedIndexChanged += new System.EventHandler(this.cmbMes_SelectedIndexChanged);
+            this.cmbMes.Click += new System.EventHandler(this.cmbMes_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 40);
+            this.label1.Location = new System.Drawing.Point(152, 41);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(43, 20);
+            this.label1.Size = new System.Drawing.Size(47, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Mes:";
             // 
             // dtpMesFestivo
             // 
-            this.dtpMesFestivo.Location = new System.Drawing.Point(18, 228);
+            this.dtpMesFestivo.Location = new System.Drawing.Point(28, 37);
             this.dtpMesFestivo.Name = "dtpMesFestivo";
             this.dtpMesFestivo.TabIndex = 2;
+            this.dtpMesFestivo.Enter += new System.EventHandler(this.dtpMesFestivo_Enter);
+            this.dtpMesFestivo.Leave += new System.EventHandler(this.dtpMesFestivo_Leave);
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(496, 510);
+            this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.Location = new System.Drawing.Point(524, 557);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(140, 44);
             this.btnCancelar.TabIndex = 3;
@@ -161,19 +174,11 @@ namespace CargaDiasFeriados
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
-            // btnSalir
-            // 
-            this.btnSalir.Location = new System.Drawing.Point(651, 510);
-            this.btnSalir.Name = "btnSalir";
-            this.btnSalir.Size = new System.Drawing.Size(140, 44);
-            this.btnSalir.TabIndex = 3;
-            this.btnSalir.Text = "Salir";
-            this.btnSalir.UseVisualStyleBackColor = true;
-            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
-            // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(341, 510);
+            this.btnGuardar.Enabled = false;
+            this.btnGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGuardar.Location = new System.Drawing.Point(369, 557);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(140, 44);
             this.btnGuardar.TabIndex = 3;
@@ -183,28 +188,55 @@ namespace CargaDiasFeriados
             // 
             // dtGrdVwFeriados
             // 
+            this.dtGrdVwFeriados.BackgroundColor = System.Drawing.SystemColors.InactiveCaption;
             this.dtGrdVwFeriados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtGrdVwFeriados.Location = new System.Drawing.Point(377, 228);
+            this.dtGrdVwFeriados.Location = new System.Drawing.Point(427, 37);
             this.dtGrdVwFeriados.Name = "dtGrdVwFeriados";
             this.dtGrdVwFeriados.ReadOnly = true;
+            this.dtGrdVwFeriados.RowHeadersVisible = false;
             this.dtGrdVwFeriados.RowHeadersWidth = 62;
             this.dtGrdVwFeriados.RowTemplate.Height = 28;
-            this.dtGrdVwFeriados.Size = new System.Drawing.Size(414, 253);
+            this.dtGrdVwFeriados.Size = new System.Drawing.Size(316, 253);
             this.dtGrdVwFeriados.TabIndex = 4;
             this.dtGrdVwFeriados.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtGrdVwFeriados_CellDoubleClick);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.dtpMesFestivo);
+            this.groupBox3.Controls.Add(this.dtGrdVwFeriados);
+            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox3.Location = new System.Drawing.Point(44, 229);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(775, 313);
+            this.groupBox3.TabIndex = 5;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Seleccionar el Dia";
+            // 
+            // btnSalir
+            // 
+            this.btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSalir.Location = new System.Drawing.Point(679, 557);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Size = new System.Drawing.Size(140, 44);
+            this.btnSalir.TabIndex = 3;
+            this.btnSalir.Text = "Salir";
+            this.btnSalir.UseVisualStyleBackColor = true;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(809, 566);
-            this.Controls.Add(this.dtGrdVwFeriados);
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.ClientSize = new System.Drawing.Size(861, 671);
+            this.ControlBox = false;
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnCancelar);
-            this.Controls.Add(this.dtpMesFestivo);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Carga Dias Feriados";
@@ -214,6 +246,7 @@ namespace CargaDiasFeriados
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtGrdVwFeriados)).EndInit();
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -231,9 +264,10 @@ namespace CargaDiasFeriados
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MonthCalendar dtpMesFestivo;
         private System.Windows.Forms.Button btnCancelar;
-        private System.Windows.Forms.Button btnSalir;
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.DataGridView dtGrdVwFeriados;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button btnSalir;
     }
 }
 

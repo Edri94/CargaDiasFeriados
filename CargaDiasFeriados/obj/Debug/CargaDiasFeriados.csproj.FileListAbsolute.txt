@@ -12,3 +12,4 @@ C:\Users\MI05332\source\repos\CargaDiasFeriados\CargaDiasFeriados\bin\Debug\Enti
 C:\Users\MI05332\source\repos\CargaDiasFeriados\CargaDiasFeriados\bin\Debug\EntityFramework.xml
 C:\Users\MI05332\source\repos\CargaDiasFeriados\CargaDiasFeriados\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\MI05332\source\repos\CargaDiasFeriados\CargaDiasFeriados\obj\Debug\CargaDiasFeriados.csproj.CopyComplete
+C:\Users\MI05332\source\repos\CargaDiasFeriados\CargaDiasFeriados\obj\Debug\CargaDiasFeriados.csproj.AssemblyReference.cache
