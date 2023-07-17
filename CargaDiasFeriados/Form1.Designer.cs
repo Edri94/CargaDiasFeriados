@@ -29,6 +29,7 @@ namespace CargaDiasFeriados
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rbAmbos = new System.Windows.Forms.RadioButton();
             this.rbEUA = new System.Windows.Forms.RadioButton();
@@ -44,10 +45,13 @@ namespace CargaDiasFeriados
             this.dtGrdVwFeriados = new System.Windows.Forms.DataGridView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnSalir = new System.Windows.Forms.Button();
+            this.bgwCargaFines = new System.ComponentModel.BackgroundWorker();
+            this.loading = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtGrdVwFeriados)).BeginInit();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.loading)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -190,7 +194,7 @@ namespace CargaDiasFeriados
             // 
             this.dtGrdVwFeriados.BackgroundColor = System.Drawing.SystemColors.InactiveCaption;
             this.dtGrdVwFeriados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtGrdVwFeriados.Location = new System.Drawing.Point(427, 37);
+            this.dtGrdVwFeriados.Location = new System.Drawing.Point(419, 37);
             this.dtGrdVwFeriados.Name = "dtGrdVwFeriados";
             this.dtGrdVwFeriados.ReadOnly = true;
             this.dtGrdVwFeriados.RowHeadersVisible = false;
@@ -202,6 +206,7 @@ namespace CargaDiasFeriados
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.loading);
             this.groupBox3.Controls.Add(this.dtpMesFestivo);
             this.groupBox3.Controls.Add(this.dtGrdVwFeriados);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -223,12 +228,30 @@ namespace CargaDiasFeriados
             this.btnSalir.UseVisualStyleBackColor = true;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
+            // bgwCargaFines
+            // 
+            this.bgwCargaFines.WorkerReportsProgress = true;
+            this.bgwCargaFines.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwCargaFines_DoWork);
+            this.bgwCargaFines.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwCargaFines_RunWorkerCompleted);
+            // 
+            // loading
+            // 
+            this.loading.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.loading.Image = ((System.Drawing.Image)(resources.GetObject("loading.Image")));
+            this.loading.Location = new System.Drawing.Point(505, 91);
+            this.loading.Name = "loading";
+            this.loading.Size = new System.Drawing.Size(145, 136);
+            this.loading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.loading.TabIndex = 5;
+            this.loading.TabStop = false;
+            this.loading.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(861, 671);
+            this.ClientSize = new System.Drawing.Size(861, 657);
             this.ControlBox = false;
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.btnGuardar);
@@ -247,6 +270,7 @@ namespace CargaDiasFeriados
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtGrdVwFeriados)).EndInit();
             this.groupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.loading)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -268,6 +292,8 @@ namespace CargaDiasFeriados
         private System.Windows.Forms.DataGridView dtGrdVwFeriados;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button btnSalir;
+        private System.ComponentModel.BackgroundWorker bgwCargaFines;
+        private System.Windows.Forms.PictureBox loading;
     }
 }
 
